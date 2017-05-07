@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MusicManager : MonoBehaviour {
 
@@ -22,15 +23,25 @@ public class MusicManager : MonoBehaviour {
 		
 	}
 
-	void OnLevelWasLoaded(int level){
-		AudioClip thisLevelMusic = levelMusicChangeArray[level];
+	void OnEnable(){
+		SceneManager.sceneLoaded += OnLevelFinishedLoading;
+	}
 
-		Debug.Log("Playing clip: " + thisLevelMusic); 
-		
-		if(thisLevelMusic) {  // If there's some music attached
+	void OnDisable(){
+		SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+	}
+
+	void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
+	{
+		AudioClip thisLevelMusic = levelMusicChangeArray[scene.buildIndex];
+
+		Debug.Log("Playing clip: " + thisLevelMusic);
+
+		if(thisLevelMusic) { // If there's some music attached
 			audioSource.clip = thisLevelMusic;
 			audioSource.loop = true;
 			audioSource.Play();
 		}
+
 	}
 }
