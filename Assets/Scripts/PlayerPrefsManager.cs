@@ -31,7 +31,7 @@ public class PlayerPrefsManager : MonoBehaviour {
 
 	public static bool IsLevelUnlocked(int level) {
 		int levelValue = PlayerPrefs.GetInt(LEVEL_KEY + level.ToString());
-		bool isLevelUnlocked = (levelValue == 1);
+		bool isLevelUnlocked = (levelValue == 1);  // How did this do implicit conversion without even warning
 
 		if(level <= SceneManager.sceneCountInBuildSettings - 1) {
 			return isLevelUnlocked;
