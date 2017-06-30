@@ -24,7 +24,12 @@
 	}
 
 	public void StrikeCurrentTarget(float damage){
-		Debug.Log(name + " caused damage: " + damage); 
+		if(currentTarget) {
+			Health health = currentTarget.GetComponent<Health>();
+			if(health) {
+				health.DealDamage(damage);
+			}
+		}
 	}
 
 	public void Attack(GameObject obj){
